@@ -16,6 +16,10 @@
 		E9DF9157201315D000074939 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9DF9155201315D000074939 /* LaunchScreen.storyboard */; };
 		E9DF916420131B6D00074939 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E9DF916320131B6D00074939 /* GoogleService-Info.plist */; };
 		E9DF9166201320F700074939 /* DataServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF9165201320F700074939 /* DataServices.swift */; };
+		E9DF91682013430B00074939 /* AuthVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF91672013430B00074939 /* AuthVC.swift */; };
+		E9DF916A201343BC00074939 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF9169201343BC00074939 /* LoginVC.swift */; };
+		E9DF916C2013449D00074939 /* InsetTxtField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF916B2013449D00074939 /* InsetTxtField.swift */; };
+		E9DF916E20134D7700074939 /* ShadowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF916D20134D7700074939 /* ShadowView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +36,10 @@
 		E9DF9158201315D000074939 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9DF916320131B6D00074939 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		E9DF9165201320F700074939 /* DataServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataServices.swift; sourceTree = "<group>"; };
+		E9DF91672013430B00074939 /* AuthVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthVC.swift; sourceTree = "<group>"; };
+		E9DF9169201343BC00074939 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		E9DF916B2013449D00074939 /* InsetTxtField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsetTxtField.swift; sourceTree = "<group>"; };
+		E9DF916D20134D7700074939 /* ShadowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +103,8 @@
 			children = (
 				E9DF914C201315D000074939 /* FirstViewController.swift */,
 				E9DF914E201315D000074939 /* SecondViewController.swift */,
+				E9DF91672013430B00074939 /* AuthVC.swift */,
+				E9DF9169201343BC00074939 /* LoginVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -102,6 +112,8 @@
 		E9DF915F2013177400074939 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E9DF916B2013449D00074939 /* InsetTxtField.swift */,
+				E9DF916D20134D7700074939 /* ShadowView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -273,7 +285,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9DF91682013430B00074939 /* AuthVC.swift in Sources */,
 				E9DF914F201315D000074939 /* SecondViewController.swift in Sources */,
+				E9DF916C2013449D00074939 /* InsetTxtField.swift in Sources */,
+				E9DF916A201343BC00074939 /* LoginVC.swift in Sources */,
+				E9DF916E20134D7700074939 /* ShadowView.swift in Sources */,
 				E9DF914B201315D000074939 /* AppDelegate.swift in Sources */,
 				E9DF914D201315D000074939 /* FirstViewController.swift in Sources */,
 				E9DF9166201320F700074939 /* DataServices.swift in Sources */,
