@@ -39,7 +39,22 @@ class DataService {
         REF_BASE.child(uid).updateChildValues(userData)
     }
     
-    
+    func postUserMessage(withMessage message:String,forUID uid:String,withGroupKey groupKey:String?, completion:@escaping (_ status:Bool) -> ()) {
+        
+        if groupKey != nil {
+            //send to the grp reference
+        }else {
+            REF_FEEDS.childByAutoId().updateChildValues(["content":message,"senderId":uid])
+            completion(true)
+        }
+        
+        
+        
+        
+        
+        
+        
+    }
     
     
     
