@@ -124,7 +124,7 @@
                                     <constraint firstItem="zL4-is-GME" firstAttribute="centerX" secondItem="xcV-CZ-SeU" secondAttribute="centerX" id="tii-NT-S7L"/>
                                 </constraints>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Nnv-jj-dHI">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="defaultProfileImage" translatesAutoresizingMaskIntoConstraints="NO" id="Nnv-jj-dHI">
                                 <rect key="frame" x="20" y="134" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="60" id="d6c-MF-baz"/>
@@ -138,14 +138,14 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Say Something..." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="JU0-M1-49w">
-                                <rect key="frame" x="20" y="214" width="335" height="504"/>
+                                <rect key="frame" x="20" y="214" width="335" height="508"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.27058823529999998" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="textColor" red="0.33951822920000002" green="0.76022677949999995" blue="1" alpha="0.87285958900000005" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vpI-gI-cuO">
-                                <rect key="frame" x="16" y="738" width="343" height="40"/>
+                                <rect key="frame" x="0.0" y="742" width="375" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="bRS-Ei-h5r"/>
                                 </constraints>
@@ -160,12 +160,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.25490196079999999" green="0.27058823529999998" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="XNG-wj-nxh" firstAttribute="trailing" secondItem="vpI-gI-cuO" secondAttribute="trailing" constant="16" id="5sd-IL-kTv"/>
+                            <constraint firstItem="XNG-wj-nxh" firstAttribute="trailing" secondItem="vpI-gI-cuO" secondAttribute="trailing" id="1Lk-no-cOT"/>
+                            <constraint firstAttribute="bottom" secondItem="vpI-gI-cuO" secondAttribute="bottom" constant="30" id="2y8-ze-yUw"/>
                             <constraint firstItem="XNG-wj-nxh" firstAttribute="trailing" secondItem="JU0-M1-49w" secondAttribute="trailing" constant="20" id="8Rp-Ol-hSR"/>
                             <constraint firstItem="xcV-CZ-SeU" firstAttribute="trailing" secondItem="XNG-wj-nxh" secondAttribute="trailing" id="91B-FL-xzm"/>
                             <constraint firstItem="XNG-wj-nxh" firstAttribute="trailing" secondItem="Fgk-f4-4Gb" secondAttribute="trailing" constant="20" id="CwU-9B-WYQ"/>
                             <constraint firstItem="Nnv-jj-dHI" firstAttribute="top" secondItem="xcV-CZ-SeU" secondAttribute="bottom" constant="20" id="JBy-To-noA"/>
-                            <constraint firstItem="vpI-gI-cuO" firstAttribute="leading" secondItem="XNG-wj-nxh" secondAttribute="leading" constant="16" id="Pqs-W7-MIt"/>
                             <constraint firstItem="Fgk-f4-4Gb" firstAttribute="leading" secondItem="Nnv-jj-dHI" secondAttribute="trailing" constant="20" id="Ptk-ea-Tq0"/>
                             <constraint firstItem="vpI-gI-cuO" firstAttribute="top" secondItem="JU0-M1-49w" secondAttribute="bottom" constant="20" id="RTS-dz-DvQ"/>
                             <constraint firstItem="Fgk-f4-4Gb" firstAttribute="centerY" secondItem="Nnv-jj-dHI" secondAttribute="centerY" id="VMA-PJ-RPk"/>
@@ -173,7 +173,7 @@
                             <constraint firstItem="xcV-CZ-SeU" firstAttribute="top" secondItem="XNG-wj-nxh" secondAttribute="top" id="czm-9d-B7B"/>
                             <constraint firstItem="JU0-M1-49w" firstAttribute="top" secondItem="Nnv-jj-dHI" secondAttribute="bottom" constant="20" id="e6i-Qi-u63"/>
                             <constraint firstItem="xcV-CZ-SeU" firstAttribute="leading" secondItem="XNG-wj-nxh" secondAttribute="leading" id="k2f-Ga-Vah"/>
-                            <constraint firstItem="XNG-wj-nxh" firstAttribute="bottom" secondItem="vpI-gI-cuO" secondAttribute="bottom" id="s8e-nH-6h8"/>
+                            <constraint firstItem="vpI-gI-cuO" firstAttribute="leading" secondItem="XNG-wj-nxh" secondAttribute="leading" id="uxJ-f5-juI"/>
                             <constraint firstItem="JU0-M1-49w" firstAttribute="leading" secondItem="XNG-wj-nxh" secondAttribute="leading" constant="20" id="yMa-Gx-pad"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="XNG-wj-nxh"/>
