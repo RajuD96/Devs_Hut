@@ -36,7 +36,6 @@ class DataService {
     }
     
     func createDBUser(uid:String, userData:Dictionary<String,Any>) {
-        
         REF_BASE.child(uid).updateChildValues(userData)
     }
     
