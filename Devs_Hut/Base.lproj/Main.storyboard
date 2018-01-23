@@ -353,9 +353,9 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="user@devslopes.com" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BDv-Lo-Utx">
-                                        <rect key="frame" x="84" y="150" width="206" height="20"/>
+                                        <rect key="frame" x="89.333333333333329" y="150" width="195.33333333333337" height="21"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="20" id="I0Z-fk-zw4"/>
+                                            <constraint firstAttribute="height" constant="21" id="Pwt-5E-uAe"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
                                         <color key="textColor" red="0.33951822920000002" green="0.76022677949999995" blue="1" alpha="0.87285958900000005" colorSpace="custom" customColorSpace="sRGB"/>
@@ -364,11 +364,10 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.27058823529999998" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstItem="BDv-Lo-Utx" firstAttribute="top" secondItem="7pn-n0-e1A" secondAttribute="bottom" constant="20" id="2UO-d0-tIg"/>
-                                    <constraint firstItem="BDv-Lo-Utx" firstAttribute="leading" secondItem="a8a-0x-WvV" secondAttribute="leading" constant="84" id="DpE-Lx-NCg"/>
+                                    <constraint firstItem="BDv-Lo-Utx" firstAttribute="top" secondItem="7pn-n0-e1A" secondAttribute="bottom" constant="20" id="AKa-f8-prX"/>
+                                    <constraint firstItem="BDv-Lo-Utx" firstAttribute="centerX" secondItem="a8a-0x-WvV" secondAttribute="centerX" id="AVd-FA-ECp"/>
                                     <constraint firstItem="7pn-n0-e1A" firstAttribute="top" secondItem="a8a-0x-WvV" secondAttribute="top" constant="30" id="Skx-jG-thQ"/>
                                     <constraint firstItem="7pn-n0-e1A" firstAttribute="centerX" secondItem="a8a-0x-WvV" secondAttribute="centerX" id="f4z-hk-c1i"/>
-                                    <constraint firstAttribute="trailing" secondItem="BDv-Lo-Utx" secondAttribute="trailing" constant="85" id="tZL-Of-YBa"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Jwt-5R-wbU">

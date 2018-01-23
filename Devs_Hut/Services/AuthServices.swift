@@ -20,14 +20,14 @@ class AuthService {
                 registerUserComplete(false, error)
                 return
             }
-            let userData = ["provider":user.providerID,"email":user.email]
+            let userData = ["provider": user.providerID, "email": user.email]
             DataService.instance.createDBUser(uid: user.uid, userData: userData)
             registerUserComplete(true, nil)
             
         }
     }
     
-    func loginUser(withEmail email:String, andPassWord password:String,loginUserComplete: @escaping (_ status:Bool, _ Error:Error?) -> ()) {
+    func loginUser(withEmail email:String, andPassWord password:String,loginUserComplete: @escaping (_ status:Bool, _ error:Error?) -> ()) {
         
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error != nil{

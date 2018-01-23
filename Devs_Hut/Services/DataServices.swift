@@ -36,7 +36,19 @@ class DataService {
     }
     
     func createDBUser(uid:String, userData:Dictionary<String,Any>) {
-        REF_BASE.child(uid).updateChildValues(userData)
+        REF_USER.child(uid).updateChildValues(userData)
+    }
+    
+    func getUserName(withUID uid:String,handeler: @escaping(_ userName:String)->()) {
+        REF_USER.observeSingleEvent(of: .value) { (userSnapShot) in
+            guard let userSnapShot = userSnapShot.children.allObjects as? [DataSnapshot] else {return}
+            
+            for user in userSnapShot {
+                if user.key == uid {
+                    handeler(user.childSnapshot(forPath: "email").value as! String)
+                }
+            }
+        }
     }
     
     func postUserMessage(withMessage message:String,forUID uid:String,withGroupKey groupKey:String?, completion:@escaping (_ status:Bool) -> ()) {
@@ -48,12 +60,10 @@ class DataService {
             completion(true)
         }
     }
-    
-    
-    
+
     func getMessage(handler:@escaping (_ messages:[Message])-> ()){
         var messageArry = [Message]()
-        _REF_FEEDS.observeSingleEvent(of: .value) { (feedMessageSnapShot) in
+        REF_FEEDS.observeSingleEvent(of: .value) { (feedMessageSnapShot) in
             guard let feedMessageSnapShot = feedMessageSnapShot.children.allObjects as? [DataSnapshot] else { return }
             
             for message in feedMessageSnapShot {
@@ -65,9 +75,5 @@ class DataService {
             }
             handler(messageArry)
         }
-        
     }
-    
-    
-    
 }

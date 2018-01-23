@@ -19,7 +19,7 @@ class LoginVC: UIViewController {
         
     }
     @IBAction func signUpBtnwasPressed(_ sender: Any) {
-        if emailTxtFeild.text != "" && passwordTxtFeild.text != "" {
+        if emailTxtFeild.text != nil && passwordTxtFeild.text != nil {
             AuthService.instance.loginUser(withEmail: emailTxtFeild.text!, andPassWord: passwordTxtFeild.text!, loginUserComplete: { (success, loginError) in
                 if success {
                     self.dismiss(animated: true, completion: nil)
