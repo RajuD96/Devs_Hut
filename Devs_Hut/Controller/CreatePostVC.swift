@@ -44,8 +44,6 @@ class CreatePostVC: UIViewController {
             })
         }
     }
-    
-
 }
 extension CreatePostVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
