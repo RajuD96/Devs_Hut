@@ -7,10 +7,10 @@
 //
 
 import UIKit
+import Firebase
 
 class CreateGroupVC: UIViewController {
 
-    
     @IBOutlet weak var titleTxtField: InsetTxtField!
     @IBOutlet weak var descriptionTxtfield: InsetTxtField!
     @IBOutlet weak var addEmailsTxtField: InsetTxtField!
@@ -39,7 +39,7 @@ class CreateGroupVC: UIViewController {
             emailArry = []
             tableView.reloadData()
         }else {
-            DataService.instance.getEmail(searchQuery: addEmailsTxtField.text!, hanler: { (returnedEmailArry) in
+            DataService.instance.getEmail(searchQuery: addEmailsTxtField.text!, handler: { (returnedEmailArry) in
                 self.emailArry = returnedEmailArry
                 self.tableView.reloadData()
             })
@@ -52,8 +52,24 @@ class CreateGroupVC: UIViewController {
     
     @IBAction func doneBtnWasPressed(_ sender: Any) {
         
+        if titleTxtField.text != "" && descriptionTxtfield.text != "" {
+            DataService.instance.getIds(forUserName: selectedEmailArry, handler: { (returnIds) in
+                var userId = returnIds
+                userId.append((Auth.auth().currentUser?.uid)!)
+                DataService.instance.createGroup(groupTitle: self.titleTxtField.text!, groupDescription: self.descriptionTxtfield.text!, grpIds: userId, handler: { (groupCreated) in
+                    if groupCreated {
+                        self.dismiss(animated: true, completion: nil)
+                    }
+                    else {
+                        print("error")
+                    }
+                })
+            })
+        }
     }
+    
 }
+
 
 extension CreateGroupVC:UITableViewDelegate,UITableViewDataSource {
     
@@ -92,10 +108,5 @@ extension CreateGroupVC:UITableViewDelegate,UITableViewDataSource {
         }
     }
 }
-
-
-
-
-
 
 extension CreateGroupVC:UITextFieldDelegate {}

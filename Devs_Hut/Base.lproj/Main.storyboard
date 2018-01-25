@@ -281,13 +281,56 @@
                                 <rect key="frame" x="0.0" y="114" width="375" height="615"/>
                                 <color key="backgroundColor" red="0.25490196079999999" green="0.27058823529999998" blue="0.31372549020000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" rowHeight="100" id="ip9-cs-eKy">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="groupCell" rowHeight="100" id="ip9-cs-eKy" customClass="GroupCell" customModule="Devs_Hut" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="375" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ip9-cs-eKy" id="IWf-Tb-L6B">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="99.666666666666671"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfb-EQ-6EN">
+                                                    <rect key="frame" x="10" y="10" width="350" height="20"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="20" id="x6F-ct-R6Q"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="18"/>
+                                                    <color key="textColor" red="0.33951822920000002" green="0.76022677949999995" blue="1" alpha="0.87285958900000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="tqm-nR-bfo">
+                                                    <rect key="frame" x="10" y="35" width="355" height="54.666666666666657"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="9" translatesAutoresizingMaskIntoConstraints="NO" id="8hZ-3C-ajD">
+                                                            <rect key="frame" x="0.0" y="0.0" width="355" height="25"/>
+                                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                            <color key="textColor" red="0.33951822920000002" green="0.76022677949999995" blue="1" alpha="0.87285958900000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_members:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cJ4-Lb-znH">
+                                                            <rect key="frame" x="0.0" y="30" width="355" height="24.666666666666671"/>
+                                                            <fontDescription key="fontDescription" name="Menlo-Regular" family="Menlo" pointSize="14"/>
+                                                            <color key="textColor" red="0.33951822920000002" green="0.76022677949999995" blue="1" alpha="0.87285958900000005" colorSpace="custom" customColorSpace="sRGB"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <color key="backgroundColor" red="0.16078431369999999" green="0.16862745100000001" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
+                                            <constraints>
+                                                <constraint firstItem="wfb-EQ-6EN" firstAttribute="leading" secondItem="IWf-Tb-L6B" secondAttribute="leading" constant="10" id="FL0-Rl-OQf"/>
+                                                <constraint firstItem="wfb-EQ-6EN" firstAttribute="top" secondItem="IWf-Tb-L6B" secondAttribute="top" constant="10" id="SOd-Cv-6Fw"/>
+                                                <constraint firstAttribute="trailing" secondItem="tqm-nR-bfo" secondAttribute="trailing" constant="10" id="VbI-xO-SmU"/>
+                                                <constraint firstItem="tqm-nR-bfo" firstAttribute="top" secondItem="wfb-EQ-6EN" secondAttribute="bottom" constant="5" id="YPz-be-2GI"/>
+                                                <constraint firstAttribute="bottom" secondItem="tqm-nR-bfo" secondAttribute="bottom" constant="10" id="Z43-9D-Chv"/>
+                                                <constraint firstItem="tqm-nR-bfo" firstAttribute="leading" secondItem="IWf-Tb-L6B" secondAttribute="leading" constant="10" id="mvW-7m-VAv"/>
+                                                <constraint firstAttribute="trailing" secondItem="wfb-EQ-6EN" secondAttribute="trailing" constant="15" id="w4e-JV-NRF"/>
+                                            </constraints>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="groupDesc" destination="8hZ-3C-ajD" id="QZV-ID-GDh"/>
+                                            <outlet property="groupTitle" destination="wfb-EQ-6EN" id="MRo-ed-lae"/>
+                                            <outlet property="memberCount" destination="cJ4-Lb-znH" id="GRH-zC-mrC"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -305,10 +348,13 @@
                         <viewLayoutGuide key="safeArea" id="O1u-W8-tvY"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Groups" image="groups-tabIcon" selectedImage="groups-tabIcon" id="cPa-gy-q4n"/>
+                    <connections>
+                        <outlet property="tableView" destination="wMC-z9-zcd" id="aEm-0c-8E8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Nw-L8-lE0" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="750" y="598"/>
+            <point key="canvasLocation" x="749.60000000000002" y="589.65517241379314"/>
         </scene>
         <!--Create GroupVC-->
         <scene sceneID="yy4-Zh-gJC">
@@ -491,7 +537,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yta-qL-fpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1584.8" y="804.67980295566508"/>
+            <point key="canvasLocation" x="1585" y="943"/>
         </scene>
         <!--Me-->
         <scene sceneID="0cg-eF-AIB">
@@ -611,7 +657,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LRj-LR-jcx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1584.8" y="141.87192118226602"/>
+            <point key="canvasLocation" x="1585" y="185"/>
         </scene>
         <!--AuthVC-->
         <scene sceneID="XjC-3t-VHX">
@@ -786,15 +832,21 @@
                                     <action selector="signUpBtnwasPressed:" destination="Vx3-TI-ZBo" eventType="touchUpInside" id="4t7-RC-ByU"/>
                                 </connections>
                             </button>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="Pst-qE-4W8">
+                                <rect key="frame" x="169" y="387.66666666666669" width="37" height="37"/>
+                                <color key="color" red="0.84655930710000005" green="0.97831916809999997" blue="0.2453774963" alpha="0.87" colorSpace="custom" customColorSpace="displayP3"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" red="0.16078431369999999" green="0.16862745100000001" blue="0.20392156859999999" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="Pst-qE-4W8" firstAttribute="centerY" secondItem="Gxt-uh-S0h" secondAttribute="centerY" id="F7j-0U-4xT"/>
                             <constraint firstItem="rq8-pq-Wui" firstAttribute="leading" secondItem="noK-aX-nA6" secondAttribute="leading" constant="20" id="JZZ-aC-tju"/>
                             <constraint firstItem="exZ-Cf-mru" firstAttribute="leading" secondItem="noK-aX-nA6" secondAttribute="leading" constant="16" id="JaS-bS-vrP"/>
                             <constraint firstItem="exZ-Cf-mru" firstAttribute="top" secondItem="noK-aX-nA6" secondAttribute="top" constant="16" id="hPH-E1-3yq"/>
                             <constraint firstItem="noK-aX-nA6" firstAttribute="trailing" secondItem="rq8-pq-Wui" secondAttribute="trailing" constant="20" id="ioD-OT-ou8"/>
                             <constraint firstItem="dth-sk-oOC" firstAttribute="centerX" secondItem="Gxt-uh-S0h" secondAttribute="centerX" id="l4k-oP-1oq"/>
                             <constraint firstItem="rq8-pq-Wui" firstAttribute="top" secondItem="exZ-Cf-mru" secondAttribute="bottom" constant="50" id="oVS-ch-YIs"/>
+                            <constraint firstItem="Pst-qE-4W8" firstAttribute="centerX" secondItem="Gxt-uh-S0h" secondAttribute="centerX" id="pp9-GS-REm"/>
                             <constraint firstItem="dth-sk-oOC" firstAttribute="top" secondItem="rq8-pq-Wui" secondAttribute="bottom" constant="30" id="vaR-ep-fzv"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="noK-aX-nA6"/>
@@ -802,6 +854,7 @@
                     <connections>
                         <outlet property="emailTxtFeild" destination="UFw-1F-CBM" id="Lat-Cu-klV"/>
                         <outlet property="passwordTxtFeild" destination="fa1-wQ-qJi" id="Sqo-Tf-vXd"/>
+                        <outlet property="spinner" destination="Pst-qE-4W8" id="VmT-Pu-dHb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h5h-9z-ZEM" userLabel="First Responder" sceneMemberID="firstResponder"/>
