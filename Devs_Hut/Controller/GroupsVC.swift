@@ -11,12 +11,28 @@ import UIKit
 class GroupsVC: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    var groupsArry = [Group]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
     }
 
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        DataService.instance.REF_GROUPS.observe(.value) { (snapshot) in
+            DataService.instance.getAllGroups { (returnGroupsArray) in
+                self.groupsArry = returnGroupsArray
+                self.tableView.reloadData()
+            }
+        }
+        
+        
+    }
   
 
 }
@@ -25,12 +41,14 @@ extension GroupsVC:UITableViewDelegate,UITableViewDataSource {
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        return groupsArry.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell") as? GroupCell else { return UITableViewCell() }
         
-        cell.configureCell(title: "whatsapp", description: "social media ", memberCount: 2)
+        let group = groupsArry[indexPath.row]
+        
+        cell.configureCell(title: group.groupTitle, description: group.groupDesc, memberCount: group.memberCount)
         return cell
     }
 }
