@@ -13,26 +13,37 @@ class GroupFeedVC: UIViewController {
     @IBOutlet weak var membersLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var groupTitleLbl: UILabel!
-    
-    
     @IBOutlet weak var sendBtnView: UIView!
     @IBOutlet weak var textField: InsetTxtField!
     @IBOutlet weak var sendBtn: UIButton!
-    
     @IBOutlet var mainView: UIView!
+    
+    var group:Group?
+    
+    func initData(forGroup group:Group) {
+        self.group = group
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        sendBtnView.bindToKeyboard()
-//        mainView.bindToKeyboard()
-
+     mainView.bindToKeyboard()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        groupTitleLbl.text = group?.groupTitle
+        
+        DataService.instance.getEmails(group: group!) { (returnEmails) in
+            self.membersLbl.text = returnEmails.joined(separator: ", ")
+            
+        }
+        membersLbl.text = group?.members.joined(separator: ", ")
         
     }
-//    deinit {
-//        mainView.bindToKeyboard()
-//    }
-//
+
 
     @IBAction func sendBtnWasPressed(_ sender: Any) {
+        
         
     }
     
@@ -40,4 +51,6 @@ class GroupFeedVC: UIViewController {
         dismiss(animated: true)
     
 }
+    
+   
 }

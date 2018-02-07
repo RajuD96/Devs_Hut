@@ -40,13 +40,22 @@ class LoginVC: UIViewController {
                         })
                     }
                     else {
-                        print(String(describing: registerError?.localizedDescription))
+                        self.presentAlert(alert: (registerError?.localizedDescription)!)
+                        self.spinner.isHidden = true
+                        self.spinner.stopAnimating()
                     }
                 })
             })
         }
-        
-        
+    }
+    
+    func presentAlert(alert:String) {
+        let alertVC = UIAlertController(title: "Error", message: alert, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default) { (action) in
+            alertVC.dismiss(animated: true, completion: nil)
+        }
+        alertVC.addAction(okAction)
+        present(alertVC, animated: true, completion: nil)
     }
     
     @IBAction func closeBtnWasPressed(_ sender: Any) {
