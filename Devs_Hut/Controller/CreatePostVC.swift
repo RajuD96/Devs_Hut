@@ -19,7 +19,12 @@ class CreatePostVC: UIViewController {
         super.viewDidLoad()
         textView.delegate = self
         sendBtn.bindToKeyboard()
-        // Do any additional setup after loading the view.
+    }
+    
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -32,7 +37,7 @@ class CreatePostVC: UIViewController {
     }
     @IBAction func sendBtnWasPressed(_ sender: Any) {
         
-        if textView.text != nil && textView.text != "Say Something..." {
+        if textView.text != "" && textView.text != "Say Something..." {
             sendBtn.isHidden = false
             DataService.instance.postUserMessage(withMessage: textView.text, forUID: (Auth.auth().currentUser?.uid)!, withGroupKey: nil, completion: { (success) in
                 if success {
@@ -45,6 +50,8 @@ class CreatePostVC: UIViewController {
         }
     }
 }
+
+
 extension CreatePostVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = ""

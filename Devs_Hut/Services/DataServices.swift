@@ -8,8 +8,10 @@
 
 import Foundation
 import Firebase
+import FirebaseStorage
 
 let DB_BASE = Database.database().reference()
+let STORAGE_BASE = Storage.storage().reference()
 
 class DataService {
     static let instance = DataService()
@@ -18,7 +20,7 @@ class DataService {
     private var _REF_USER = DB_BASE.child("users")
     private var _REF_GROUPS = DB_BASE.child("groups")
     private var _REF_FEEDS = DB_BASE.child("feeds")
-    
+    private var _REF_STORE_PROFILEIMG = STORAGE_BASE.child("profile_Image")
     var REF_BASE:DatabaseReference {
         return _REF_BASE
     }
@@ -33,6 +35,11 @@ class DataService {
     
     var REF_FEEDS:DatabaseReference {
         return _REF_FEEDS
+    }
+    
+    var REF_STORE_PROFILEIMG: StorageReference {
+        return _REF_STORE_PROFILEIMG
+      
     }
     
     func createDBUser(uid:String, userData:Dictionary<String,Any>) {
@@ -54,8 +61,9 @@ class DataService {
     func postUserMessage(withMessage message:String,forUID uid:String,withGroupKey groupKey:String?, completion:@escaping (_ status:Bool) -> ()) {
         
         if groupKey != nil {
-            //send to the grp reference
-        }else {
+            REF_GROUPS.child(groupKey!).child("messages").childByAutoId().updateChildValues(["content":message,"senderId":uid])
+            completion(true)
+        }   else {
             REF_FEEDS.childByAutoId().updateChildValues(["content":message,"senderId":uid])
             completion(true)
         }
@@ -75,6 +83,30 @@ class DataService {
             }
             handler(messageArry)
         }
+    }
+    
+    func getAllGroupsMessages(desiredGroup:Group, handler: @escaping (_ messageArray: [Message]) -> ()) {
+        var groupMessageArray = [Message]()
+        REF_GROUPS.child(desiredGroup.key).child("messages").observeSingleEvent(of: .value) { (groupMessageSnapshot) in
+            
+            guard let groupMessageSnapshot = groupMessageSnapshot.children.allObjects as? [DataSnapshot] else { return }
+            
+            
+            for groupMessage in groupMessageSnapshot {
+                
+                let content = groupMessage.childSnapshot(forPath: "content").value as! String
+                let senderId = groupMessage.childSnapshot(forPath: "senderId").value as! String
+                let groupMessage = Message(content: content, senderId: senderId)
+                groupMessageArray.append(groupMessage)
+               
+            }
+            handler(groupMessageArray)
+        }
+        
+        
+        
+        
+        
     }
     
     func getEmail(searchQuery query:String,handler: @escaping (_ emailArry:[String])-> ()) {
@@ -111,8 +143,6 @@ class DataService {
         }
     }
     
-    
-    
     func getEmails(group: Group, handler: @escaping (_ emailArrays: [String]) -> () ) {
         
         var emailsArry = [String]()
@@ -126,10 +156,7 @@ class DataService {
                 }
             }
             handler(emailsArry)
-            
         }
-        
-        
     }
     
     func createGroup(groupTitle title:String,groupDescription description: String,grpIds ids:[String],handler:@escaping (_ groupCreted:Bool) -> ()){
@@ -155,6 +182,35 @@ class DataService {
                 }
             }
             handler(groupsArry)
+        }
+    }
+    
+    func uploadProfileImage(userId: String, profileImageUrl: String, handler: @escaping (_ complete:Bool) -> ()) {
+        
+        REF_USER.child("userId").updateChildValues(["profileImageUrl":profileImageUrl])
+        handler(true)
+        
+    }
+    
+    
+    func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: UIImage) -> ()){
+        
+        DataService.instance.REF_USER.child(uid).observe(.value) { (user) in
+            guard let profileImageUrl = user.childSnapshot(forPath: "profileImageUrl").value as? String else {
+                handler(UIImage(named: "defaultProfileImage")!)
+                return
+            }
+            print(profileImageUrl)
+            let ref = Storage.storage().reference(forURL: profileImageUrl)
+            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
+                if error != nil {
+                    print("unable to download image from firebase")
+                }
+                else {
+                    print("image downloaded from firebase")
+                    handler(UIImage(data: data!)!)
+                }
+            })
         }
     }
     
