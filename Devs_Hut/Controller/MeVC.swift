@@ -12,13 +12,14 @@ import FirebaseStorage
 
 
 class MeVC: UIViewController {
-
+    
     @IBOutlet weak var profileImage: UIImageView! 
     @IBOutlet weak var userImg: UIImageView!
     @IBOutlet weak var emailLbl: UILabel!
     
     @IBOutlet weak var tableView: UITableView!
-
+    static var imageCache: NSCache<NSString, UIImage> = NSCache()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (handleTapGesture)))
@@ -26,45 +27,20 @@ class MeVC: UIViewController {
         
     }
     
-  
+    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.emailLbl.text = Auth.auth().currentUser?.email
-        DataService.instance.REF_USER.observe(.value) { (snapshot) in
-            if let snapshot = snapshot.children.allObjects as? [DataSnapshot] {
-                for user in snapshot {
-                    if user.key == Auth.auth().currentUser?.uid {
-                        guard let profileImageUrl = user.childSnapshot(forPath: "profileImageUrl").value as? String else {
-                            self.profileImage.image = UIImage(named: "defaultProfileImage")
-                            return
-                        }
-                        let email = user.childSnapshot(forPath: "email").value as? String
-                        self.emailLbl.text = email
-                        let ref = Storage.storage().reference(forURL: profileImageUrl)
-                        ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                            if error != nil {
-                                print("Unable to download image from Firebase storage")
-                            }
-                            else {
-                                if let imgData = data {
-                                    if let img = UIImage(data: imgData){
-                                        self.profileImage.image = img
-                                       
-                                    }
-                            }
-                            }
-                        })
-                    }
-                }
-            }
+         
+        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
+            self.profileImage.image = returnedImage
         }
-        
-        
     }
-
     
-   
+    
+    
+    
     
     @IBAction func signOutBtnWasPressed(_ sender: Any) {
         let logOutPopUp = UIAlertController(title: "Logout", message: "Are you sure ..?", preferredStyle: .actionSheet)
@@ -105,24 +81,20 @@ extension MeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage{
             selectedImageFromPicker = editedImage
         }
-        else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            selectedImageFromPicker = originalImage
-        }
+      
         
-        if let selectedImage = selectedImageFromPicker {
-            profileImage.image = selectedImage
-        }
-        
-        if let uploadData = UIImagePNGRepresentation(self.profileImage.image!) {
+        if let uploadData = UIImageJPEGRepresentation(selectedImageFromPicker!, 0.8) {
             let imgUid = UUID().uuidString
             DataService.instance.REF_STORE_PROFILEIMG.child(imgUid).putData(uploadData, metadata: nil, completion: { (metadata, error) in
+                
+    
                 if error != nil {
                     print("unable to upload image")
                 }else {
                     print("successfully image upload")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
                     if let url = downloadUrl {
-                        DataService.instance.uploadProfileImage(userId: (Auth.auth().currentUser?.uid)!, profileImageUrl: url, handler: { (success) in
+                        DataService.instance.uploadProfileImage(userId: imgUid, profileImageUrl: url, forUID: (Auth.auth().currentUser?.uid)!, handler: { (success) in
                             if success {
                                 self.profileImage.image = self.profileImage.image
                                 print("profile image uploaded")

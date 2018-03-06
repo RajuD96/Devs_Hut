@@ -8,17 +8,29 @@
 
 import UIKit
 import Firebase
+import FBSDKCoreKit
+import FBSDKLoginKit
+import GoogleSignIn
 
-class AuthVC: UIViewController {
+class AuthVC: UIViewController,FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate {
+    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+        
+        let vc = storyboard?.instantiateViewController(withIdentifier: "feedVC")
+        presentDetails(vc!)
+    }
+    
+
+    @IBOutlet weak var fbLoginBtn: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
+        GIDSignIn.sharedInstance().uiDelegate = self
+        
     }
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if Auth.auth().currentUser != nil {
+            
             dismiss(animated: true, completion: nil)
         }
     }
@@ -29,9 +41,51 @@ class AuthVC: UIViewController {
     }
     
     @IBAction func googleBtnWasPressed(_ sender: Any) {
+        GIDSignIn.sharedInstance().signIn()
         
     }
     @IBAction func facebookBtnWasPressed(_ sender: Any) {
+       
+        var loginBtn: FBSDKLoginButton = FBSDKLoginButton()
+        loginBtn.readPermissions = ["email"]
+        loginBtn.delegate = self
+        loginBtn.sendActions(for: .touchUpInside)
+        
+        
+    }
+    
+    func loginButton(_ loginButton: FBSDKLoginButton!, didCompleteWith result: FBSDKLoginManagerLoginResult!, error: Error!) {
+    
+        if error != nil {
+            print(error.localizedDescription)
+        }
+        else if result.isCancelled {
+            print("User has cancels login")
+        } else {
+            
+            let credentials = FacebookAuthProvider.credential(withAccessToken: FBSDKAccessToken.current().tokenString)
+            
+            Auth.auth().signIn(with: credentials, completion: { (user, error) in
+                if error != nil {
+                    print("something wrong with user ",error ?? "")
+                    return
+                }
+            print("successfully loggin in with your fb",user ?? "")
+            })
+            
+            FBSDKGraphRequest(graphPath: "/me", parameters: ["fields":"id,email,name"]).start(completionHandler: { (connection, result, error) in
+                if error != nil {
+                    print("%%%%%%%%%%%%%%%%%",error ?? "")
+                }
+                let viewToPresent = self.storyboard?.instantiateViewController(withIdentifier: "feedVC")
+                self.presentDetails(viewToPresent!)
+                
+            })
+            
+        }
+    }
+    
+    func loginButtonDidLogOut(_ loginButton: FBSDKLoginButton!) {
         
     }
     

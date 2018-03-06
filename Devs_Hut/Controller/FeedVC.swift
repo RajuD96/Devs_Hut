@@ -49,5 +49,14 @@ extension FeedVC:UITableViewDelegate,UITableViewDataSource {
         }
         return cell
     }
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+            print("Delete")
+        }
+        return UISwipeActionsConfiguration(actions: [delete])
+        }
+        
+    }
     
-}
+

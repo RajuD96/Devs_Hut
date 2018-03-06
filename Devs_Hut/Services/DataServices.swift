@@ -185,9 +185,9 @@ class DataService {
         }
     }
     
-    func uploadProfileImage(userId: String, profileImageUrl: String, handler: @escaping (_ complete:Bool) -> ()) {
+    func uploadProfileImage(userId :String, profileImageUrl: String, forUID uid :String,handler: @escaping (_ complete:Bool) -> ()) {
         
-        REF_USER.child("userId").updateChildValues(["profileImageUrl":profileImageUrl])
+        REF_USER.updateChildValues(["profileImageUrl":profileImageUrl,"email":uid])
         handler(true)
         
     }
@@ -195,29 +195,59 @@ class DataService {
     
     func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: UIImage) -> ()){
         
-        DataService.instance.REF_USER.child(uid).observe(.value) { (user) in
-            guard let profileImageUrl = user.childSnapshot(forPath: "profileImageUrl").value as? String else {
-                handler(UIImage(named: "defaultProfileImage")!)
-                return
-            }
-            print(profileImageUrl)
-            let ref = Storage.storage().reference(forURL: profileImageUrl)
-            ref.getData(maxSize: 2 * 1024 * 1024, completion: { (data, error) in
-                if error != nil {
-                    print("unable to download image from firebase")
-                }
-                else {
-                    print("image downloaded from firebase")
-                    handler(UIImage(data: data!)!)
-                }
-            })
+       
+        
+//        DataService.instance.REF_USER.child("userId").observeSingleEvent(of: .value, with: { (<#DataSnapshot#>) in
+//            <#code#>
+//        })(.value) { (user) in
+//            guard let profileImage = user.children.allObjects as? [DataSnapshot] else {return}
+//                for image in profileImage {
+//                    if let imageData = image.childSnapshot(forPath: "email").value as? String {
+//                        if imageData == Auth.auth().currentUser?.uid {
+//
+//                            let ref = Storage.storage().reference(forURL: "Profile_Image")
+//
+//                            ref.getData(maxSize: 3 * 1024 * 1024, completion: { (data, error) in
+//                                if error != nil {
+//                                    print("unable to download #########")
+//                                }
+//                                else {
+//                                    print("downloaded image ")
+//                                    let image = UIImage(data: data!)
+//                                    handler(image!)
+////                                    let image = UIImage(data: data)
+//                                }
+//                            })
+//
+//                        }
+//                    }
+//
+//                }
+        
+        
+//            print(profileImageUrl)
+       
+            
+            
+            
+//            let ref = Storage.storage().reference(withPath: profileImageUrl)
+            
+            
+//            let maxSize : Int64 = 3 * 1024 * 1024
+//            ref.getData(maxSize: maxSize, completion: { (data, error) in
+//                if error != nil {
+//                    print("Unable to download image from Firebase storage")
+//
+//                }else {
+//                    print("Image downloaded from Firebase storage")
+//                    handler(UIImage(data: data!)!)
+//                }
+//            })
+//        }
+    
+    
+        
+    
         }
-    }
-    
-    
-    
-    
-    
-    
-    
-}
+        }
+
