@@ -13,11 +13,33 @@ import FBSDKLoginKit
 import GoogleSignIn
 
 class AuthVC: UIViewController,FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GIDSignInDelegate {
-    func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
-        
-        let vc = storyboard?.instantiateViewController(withIdentifier: "feedVC")
-        presentDetails(vc!)
-    }
+    
+        func sign(_ signIn: GIDSignIn!, didSignInFor user: GIDGoogleUser!, withError error: Error!) {
+            if let err = error {
+                print ("Failed to log in with Google: ", err)
+                return
+            }
+            
+            print ("Successfully logged in with Google", user)
+            
+            guard let idToken = user.authentication.idToken else { return }
+            guard let accessToken = user.authentication.accessToken else { return }
+            
+            let credentials = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: accessToken)
+            Auth.auth().signIn(with: credentials, completion: { (user, error) in
+                if let err = error {
+                    print("Failed to create a Firebase User with Google: ", err)
+                    return
+                } else {
+                    
+                    guard let uid = user?.uid else { return }
+                    print("Sucessfully logged in to Firebase with Google", uid)
+                    let vc = self.storyboard?.instantiateViewController(withIdentifier: "feedVC")
+                    self.presentDetails(vc!)
+                    
+                }
+            })
+        }
     
 
     @IBOutlet weak var fbLoginBtn: UIButton!
@@ -25,6 +47,7 @@ class AuthVC: UIViewController,FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GI
     override func viewDidLoad() {
         super.viewDidLoad()
         GIDSignIn.sharedInstance().uiDelegate = self
+        GIDSignIn.sharedInstance().delegate = self
         
     }
     override func viewDidAppear(_ animated: Bool) {
@@ -42,6 +65,7 @@ class AuthVC: UIViewController,FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GI
     
     @IBAction func googleBtnWasPressed(_ sender: Any) {
         GIDSignIn.sharedInstance().signIn()
+        GIDSignIn.sharedInstance().signOut()
         
     }
     @IBAction func facebookBtnWasPressed(_ sender: Any) {
@@ -81,7 +105,6 @@ class AuthVC: UIViewController,FBSDKLoginButtonDelegate, GIDSignInUIDelegate, GI
                 self.presentDetails(viewToPresent!)
                 
             })
-            
         }
     }
     

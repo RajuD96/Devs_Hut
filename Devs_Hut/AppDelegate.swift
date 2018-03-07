@@ -24,17 +24,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
         FirebaseApp.configure()
         GIDSignIn.sharedInstance().clientID = FirebaseApp.app()?.options.clientID
         
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+        
         if Auth.auth().currentUser == nil {
             let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
             let authVC = storyBoard.instantiateViewController(withIdentifier: "AuthVC")
-            FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
+            
             window?.makeKeyAndVisible()
             window?.rootViewController?.present(authVC, animated: true, completion: nil)
-        } else {
+        }
+        else  {
             let storyBoard = UIStoryboard(name: "Main", bundle: Bundle.main)
-            let feedVC = storyBoard.instantiateViewController(withIdentifier: "feedVC")
+            let FeedVC = storyBoard.instantiateViewController(withIdentifier: "feedVC")
             window?.makeKeyAndVisible()
-            window?.rootViewController?.present(feedVC, animated: true, completion: nil)
+            window?.rootViewController?.present(FeedVC, animated: true, completion: nil)
             
         }
         return true
@@ -47,6 +50,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
         let handled = FBSDKApplicationDelegate.sharedInstance().application(app, open: url, options: options)
+        
+     
         return handled
     }
 

@@ -21,11 +21,10 @@ class CreatePostVC: UIViewController {
         sendBtn.bindToKeyboard()
     }
     
-    
-    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         userEmail.text = Auth.auth().currentUser?.email
@@ -35,6 +34,7 @@ class CreatePostVC: UIViewController {
         dismiss(animated: true, completion: nil)
         
     }
+    
     @IBAction func sendBtnWasPressed(_ sender: Any) {
         
         if textView.text != "" && textView.text != "Say Something..." {
@@ -51,11 +51,9 @@ class CreatePostVC: UIViewController {
     }
 }
 
-
 extension CreatePostVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         textView.text = ""
     }
-    
 }
 

@@ -18,16 +18,14 @@ class FeedVC: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
     }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         DataService.instance.getMessage { (returnMessageArray) in
             self.messageArry = returnMessageArray.reversed()
             self.tableView.reloadData()
         }
-        
     }
-   
-
 }
 
 extension FeedVC:UITableViewDelegate,UITableViewDataSource {

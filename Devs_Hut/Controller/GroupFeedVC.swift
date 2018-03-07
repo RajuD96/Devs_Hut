@@ -28,7 +28,6 @@ class GroupFeedVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.delegate = self
         tableView.dataSource = self
         sendBtnView.bindToKeyboard()
@@ -52,9 +51,6 @@ class GroupFeedVC: UIViewController {
                 }
             })
         }
-        
-       
-        
     }
 
 
@@ -72,16 +68,12 @@ class GroupFeedVC: UIViewController {
                 
             })
         }
-        
-        
     }
     
     @IBAction func backBtnWasPressed(_ sender: Any) {
         dismiss(animated: true)
-        
     }
-    
-   
+
 }
 
 extension GroupFeedVC : UITableViewDelegate, UITableViewDataSource {
@@ -89,9 +81,11 @@ extension GroupFeedVC : UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return groupMessage.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupFeedCell", for: indexPath) as? GroupFeedCell else { return UITableViewCell() }
         
@@ -102,37 +96,7 @@ extension GroupFeedVC : UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

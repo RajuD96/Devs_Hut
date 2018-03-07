@@ -30,12 +30,9 @@ class GroupsVC: UIViewController {
                 self.tableView.reloadData()
             }
         }
-        
-        
     }
-  
-
 }
+
 extension GroupsVC:UITableViewDelegate,UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
