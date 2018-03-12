@@ -7,9 +7,10 @@
 //
 
 import UIKit
+import Firebase
 
 class FeedVC: UIViewController {
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     var messageArry = [Message]()
@@ -40,21 +41,34 @@ extension FeedVC:UITableViewDelegate,UITableViewDataSource {
         
         guard  let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell") as? FeedCell else {return UITableViewCell()}
         
-        let image = UIImage(named: "defaultProfileImage")
         let message = messageArry[indexPath.row]
-        DataService.instance.getUserName(withUID: message.senderId) { (returnUserName) in
-            cell.configureCell(userImage: image!, email: returnUserName, message: message.content)
-        }
-        return cell
-    }
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let image = UIImage(named: "defaultProfileImage")
         
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-            print("Delete")
+        DataService.instance.getUserName(withUID: message.senderId) { (returnedUserName) in
+            DataService.instance.getProfilePhoto(forUserId: message.senderId, handler: { (returnedImage) in
+                if returnedImage == nil {
+                    cell.configureCell(userImage: image!, email: returnedUserName, message: message.content)
+                }
+                else {
+                    cell.configureCell(userImage: returnedImage!, email: returnedUserName, message: message.content)
+                }
+            })
         }
-        return UISwipeActionsConfiguration(actions: [delete])
-        }
+        
+        return cell
         
     }
     
+    
+    
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
+        }
+        return UISwipeActionsConfiguration(actions: [delete])
+    }
+}
+
+
 

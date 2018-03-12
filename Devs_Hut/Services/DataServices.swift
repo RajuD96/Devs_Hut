@@ -10,6 +10,7 @@ import Foundation
 import Firebase
 import FirebaseStorage
 
+
 let DB_BASE = Database.database().reference()
 let STORAGE_BASE = Storage.storage().reference()
 
@@ -102,18 +103,13 @@ class DataService {
             }
             handler(groupMessageArray)
         }
-        
-        
-        
-        
-        
     }
     
-    func getEmail(searchQuery query:String,handler: @escaping (_ emailArry:[String])-> ()) {
+    func getEmail(searchQuery query:String,handler: @escaping (_ email: [String] )-> ()) {
         
         var emailArry = [String]()
         
-        REF_USER.observeSingleEvent(of: .value) { (userSnapShot) in
+        REF_USER.observe(.value) { (userSnapShot) in
             guard let userSnapShot = userSnapShot.children.allObjects as? [DataSnapshot] else{ return }
             
             for user in userSnapShot {
@@ -185,69 +181,42 @@ class DataService {
         }
     }
     
-    func uploadProfileImage(userId :String, profileImageUrl: String, forUID uid :String,handler: @escaping (_ complete:Bool) -> ()) {
+    func uploadProfileImage(uid:String, userData:Dictionary<String,Any>, handler: @escaping (_ complete:Bool) -> ()) {
         
-        REF_USER.updateChildValues(["profileImageUrl":profileImageUrl,"email":uid])
+        REF_USER.child(uid).updateChildValues(userData)
         handler(true)
-        
     }
     
     
-    func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: UIImage) -> ()){
-        
-       
-        
-//        DataService.instance.REF_USER.child("userId").observeSingleEvent(of: .value, with: { (<#DataSnapshot#>) in
-//            <#code#>
-//        })(.value) { (user) in
-//            guard let profileImage = user.children.allObjects as? [DataSnapshot] else {return}
-//                for image in profileImage {
-//                    if let imageData = image.childSnapshot(forPath: "email").value as? String {
-//                        if imageData == Auth.auth().currentUser?.uid {
-//
-//                            let ref = Storage.storage().reference(forURL: "Profile_Image")
-//
-//                            ref.getData(maxSize: 3 * 1024 * 1024, completion: { (data, error) in
-//                                if error != nil {
-//                                    print("unable to download #########")
-//                                }
-//                                else {
-//                                    print("downloaded image ")
-//                                    let image = UIImage(data: data!)
-//                                    handler(image!)
-////                                    let image = UIImage(data: data)
-//                                }
-//                            })
-//
-//                        }
-//                    }
-//
-//                }
-        
-        
-//            print(profileImageUrl)
-       
+    func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: UIImage?) -> ()){
+        REF_USER.observe(.value) { (snapshot) in
+            guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else {return}
             
-            
-            
-//            let ref = Storage.storage().reference(withPath: profileImageUrl)
-            
-            
-//            let maxSize : Int64 = 3 * 1024 * 1024
-//            ref.getData(maxSize: maxSize, completion: { (data, error) in
-//                if error != nil {
-//                    print("Unable to download image from Firebase storage")
-//
-//                }else {
-//                    print("Image downloaded from Firebase storage")
-//                    handler(UIImage(data: data!)!)
-//                }
-//            })
-//        }
-    
-    
-        
-    
+            for image in snapshot {
+                if uid == image.key {
+                    let imageUrl = image.childSnapshot(forPath: "profileImageUrl").value as! String
+                    let storageRef = Storage.storage().reference(forURL: imageUrl)
+                    storageRef.downloadURL(completion: { (url, error) in
+                        if error == nil {
+                            let data = NSData(contentsOf: url!)
+                            let image = UIImage(data: data! as Data)
+                            print("############")
+                            handler(image)
+                        }else {
+                            print("@@@@@@@@@@@@@")
+                            handler(nil)
+                        }
+                    })
+                    
+                }
+            }
         }
-        }
+    }
+    
+    
+    
+}
+
+
+
 

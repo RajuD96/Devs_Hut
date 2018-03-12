@@ -12,10 +12,12 @@
 		E92BE88C201648DD00D89C5E /* UIViewExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92BE88B201648DD00D89C5E /* UIViewExt.swift */; };
 		E92E126A202F541900F1465A /* CircleImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92E1269202F541900F1465A /* CircleImage.swift */; };
 		E93CBB5C2025F2A100C596DB /* Group.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93CBB5B2025F2A100C596DB /* Group.swift */; };
+		E94A6BD32055360900BD334D /* ImageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = E94A6BD22055360900BD334D /* ImageCache.swift */; };
 		E95A9EBF2027536300EF99A8 /* GroupFeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95A9EBE2027536300EF99A8 /* GroupFeedCell.swift */; };
 		E95A9EC12027548200EF99A8 /* GroupFeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95A9EC02027548200EF99A8 /* GroupFeedVC.swift */; };
 		E98081D4202F2D95006D8C71 /* UIViewControllerExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98081D3202F2D95006D8C71 /* UIViewControllerExt.swift */; };
 		E99C51062018637800CEDAD9 /* CreateGroupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99C51052018637800CEDAD9 /* CreateGroupVC.swift */; };
+		E9AAE96D2056796B0096087B /* MeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AAE96C2056796B0096087B /* MeCell.swift */; };
 		E9AD30CC2019CBB900C55181 /* GroupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AD30CB2019CBB900C55181 /* GroupCell.swift */; };
 		E9AFECCD2015BAC600FA0D16 /* AuthServices.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFECCC2015BAC600FA0D16 /* AuthServices.swift */; };
 		E9AFECCF2015EBA200FA0D16 /* MeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AFECCE2015EBA200FA0D16 /* MeVC.swift */; };
@@ -45,10 +47,12 @@
 		E92BE88B201648DD00D89C5E /* UIViewExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExt.swift; sourceTree = "<group>"; };
 		E92E1269202F541900F1465A /* CircleImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleImage.swift; sourceTree = "<group>"; };
 		E93CBB5B2025F2A100C596DB /* Group.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Group.swift; sourceTree = "<group>"; };
+		E94A6BD22055360900BD334D /* ImageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCache.swift; sourceTree = "<group>"; };
 		E95A9EBE2027536300EF99A8 /* GroupFeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupFeedCell.swift; sourceTree = "<group>"; };
 		E95A9EC02027548200EF99A8 /* GroupFeedVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupFeedVC.swift; sourceTree = "<group>"; };
 		E98081D3202F2D95006D8C71 /* UIViewControllerExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewControllerExt.swift; sourceTree = "<group>"; };
 		E99C51052018637800CEDAD9 /* CreateGroupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateGroupVC.swift; sourceTree = "<group>"; };
+		E9AAE96C2056796B0096087B /* MeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeCell.swift; sourceTree = "<group>"; };
 		E9AD30CB2019CBB900C55181 /* GroupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCell.swift; sourceTree = "<group>"; };
 		E9AFECCC2015BAC600FA0D16 /* AuthServices.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthServices.swift; sourceTree = "<group>"; };
 		E9AFECCE2015EBA200FA0D16 /* MeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeVC.swift; sourceTree = "<group>"; };
@@ -153,6 +157,7 @@
 				E9AD30CB2019CBB900C55181 /* GroupCell.swift */,
 				E95A9EBE2027536300EF99A8 /* GroupFeedCell.swift */,
 				E92E1269202F541900F1465A /* CircleImage.swift */,
+				E9AAE96C2056796B0096087B /* MeCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -171,6 +176,7 @@
 			children = (
 				E92BE88B201648DD00D89C5E /* UIViewExt.swift */,
 				E98081D3202F2D95006D8C71 /* UIViewControllerExt.swift */,
+				E94A6BD22055360900BD334D /* ImageCache.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -319,6 +325,7 @@
 				"${BUILT_PRODUCTS_DIR}/GTMOAuth2/GTMOAuth2.framework",
 				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
 				"${BUILT_PRODUCTS_DIR}/GoogleToolboxForMac/GoogleToolboxForMac.framework",
+				"${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -330,6 +337,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMOAuth2.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleToolboxForMac.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/IQKeyboardManagerSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
@@ -354,12 +362,14 @@
 				E9DF914F201315D000074939 /* GroupsVC.swift in Sources */,
 				E95A9EC12027548200EF99A8 /* GroupFeedVC.swift in Sources */,
 				E95A9EBF2027536300EF99A8 /* GroupFeedCell.swift in Sources */,
+				E9AAE96D2056796B0096087B /* MeCell.swift in Sources */,
 				E9DF916C2013449D00074939 /* InsetTxtField.swift in Sources */,
 				E9DF916A201343BC00074939 /* LoginVC.swift in Sources */,
 				E9DF916E20134D7700074939 /* ShadowView.swift in Sources */,
 				E93CBB5C2025F2A100C596DB /* Group.swift in Sources */,
 				E9C338EF20186AAE00000743 /* UserCell.swift in Sources */,
 				E99C51062018637800CEDAD9 /* CreateGroupVC.swift in Sources */,
+				E94A6BD32055360900BD334D /* ImageCache.swift in Sources */,
 				E9DF914B201315D000074939 /* AppDelegate.swift in Sources */,
 				E92BE88A20163F3800D89C5E /* CreatePostVC.swift in Sources */,
 				E9AFECCD2015BAC600FA0D16 /* AuthServices.swift in Sources */,

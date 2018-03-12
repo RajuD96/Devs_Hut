@@ -18,7 +18,15 @@ class CreatePostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
-        sendBtn.bindToKeyboard()
+        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
+            if returnedImage == nil {
+                self.userImage.image = UIImage(named: "defaultProfileImage")
+            }else {
+                self.userImage.image = returnedImage
+            }
+            
+        }
+        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

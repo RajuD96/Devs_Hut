@@ -20,6 +20,8 @@ class Message {
     var senderId:String {
         return _senderId
     }
+
+    
     init(content:String,senderId:String) {
         self._content = content
         self._senderId = senderId

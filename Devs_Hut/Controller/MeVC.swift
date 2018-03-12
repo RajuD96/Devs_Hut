@@ -10,6 +10,7 @@ import UIKit
 import Firebase
 import FirebaseStorage
 import GoogleSignIn
+import FBSDKLoginKit
 
 
 class MeVC: UIViewController {
@@ -18,22 +19,34 @@ class MeVC: UIViewController {
     @IBOutlet weak var userImg: UIImageView!
     @IBOutlet weak var emailLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
-    static var imageCache: NSCache<NSString, UIImage> = NSCache()
+    
+    
+    var groups = [Group]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (handleTapGesture)))
+        
+        DataService.instance.REF_GROUPS.observe(.value) { (snapshot) in
+            DataService.instance.getAllGroups(handler: { (groupInfo) in
+                self.groups = groupInfo
+                self.tableView.reloadData()
+            })
+        }
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+    profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (handleTapGesture)))
         profileImage.isUserInteractionEnabled = true
         
+        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
+            self.profileImage.image = returnedImage
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.emailLbl.text = Auth.auth().currentUser?.email
-        
-        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
-            self.profileImage.image = returnedImage
-        }
     }
     
     @IBAction func signOutBtnWasPressed(_ sender: Any) {
@@ -42,14 +55,22 @@ class MeVC: UIViewController {
             do{
                 try Auth.auth().signOut()
                 GIDSignIn.sharedInstance().signOut()
+                FBSDKLoginManager().logOut()
+                
                 print("logout")
                 let authVC = self.storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC
+                
                 self.present(authVC!, animated: true, completion: nil)
+                self.profileImage.image = UIImage(named: "defaultProfileImage")
             }catch {
                 print(error)
             }
         }
+    
+        let logoutCancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
+        }
         logOutPopUp.addAction(logOutAction)
+        logOutPopUp.addAction(logoutCancel)
         present(logOutPopUp, animated: true, completion: nil)
     }
     
@@ -69,25 +90,27 @@ extension MeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
         var selectedImageFromPicker : UIImage?
         if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage{
             selectedImageFromPicker = editedImage
+            self.profileImage.image = selectedImageFromPicker
         }
         
         if let uploadData = UIImageJPEGRepresentation(selectedImageFromPicker!, 0.8) {
-            let imgUid = UUID().uuidString
-            DataService.instance.REF_STORE_PROFILEIMG.child(imgUid).putData(uploadData, metadata: nil, completion: { (metadata, error) in
-                
-                
+            let imgUid = Auth.auth().currentUser?.uid
+            DataService.instance.REF_STORE_PROFILEIMG.child(imgUid!).putData(uploadData, metadata: nil, completion: { (metadata, error) in
                 if error != nil {
                     print("unable to upload image")
                 }else {
                     print("successfully image upload")
                     let downloadUrl = metadata?.downloadURL()?.absoluteString
                     if let url = downloadUrl {
-                        DataService.instance.uploadProfileImage(userId: imgUid, profileImageUrl: url, forUID: (Auth.auth().currentUser?.uid)!, handler: { (success) in
+                        
+                        let profileUrl = ["profileImageUrl":url]
+                        
+                        DataService.instance.uploadProfileImage(uid: (Auth.auth().currentUser?.uid)!, userData: profileUrl, handler: { (success) in
                             if success {
-                                self.profileImage.image = self.profileImage.image
-                                print("profile image uploaded")
-                            }else {
-                                print("cant save image")
+                                print("Profile image was successfully stored")
+                            }
+                            else {
+                        print("unable to store image into storage")
                             }
                         })
                     }
@@ -106,6 +129,25 @@ extension MeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
         dismiss(animated: true, completion: nil)
     }
     
+}
+
+extension MeVC : UITableViewDataSource,UITableViewDelegate {
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return groups.count
+    }
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "meCell", for: indexPath) as? MeCell else { return UITableViewCell()}
+        let group = groups[indexPath.row]
+        
+        cell.configureCell(groupTitle: group.groupTitle)
+        return cell
+        
+    }
 }
 
 

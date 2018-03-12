@@ -33,7 +33,11 @@ class LoginVC: UIViewController {
                 AuthService.instance.registerUser(withEmail: self.emailTxtFeild.text!, andPassword: self.passwordTxtFeild.text!, registerUserComplete: { (success, registerError) in
                     if success {
                         AuthService.instance.loginUser(withEmail: self.emailTxtFeild.text!, andPassWord: self.passwordTxtFeild.text!, loginUserComplete: { (success, nil) in
+                            
                             self.dismiss(animated: true, completion: nil)
+//                            let FeedVC = self.storyboard?.instantiateViewController(withIdentifier: "feedVC")
+//                            self.presentDetails(FeedVC!)
+                            
                             self.spinner.isHidden = true
                             self.spinner.stopAnimating()
                             print("Successfully LoginUser")

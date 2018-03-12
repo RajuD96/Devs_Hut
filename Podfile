@@ -12,5 +12,6 @@ target 'Devs_Hut' do
   pod 'Firebase/Storage'
   pod 'FBSDKLoginKit'
   pod 'GoogleSignIn'
+  pod 'IQKeyboardManagerSwift'
 
 end
