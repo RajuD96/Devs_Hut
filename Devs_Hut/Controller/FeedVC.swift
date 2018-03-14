@@ -18,6 +18,7 @@ class FeedVC: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -42,33 +43,11 @@ extension FeedVC:UITableViewDelegate,UITableViewDataSource {
         guard  let cell = tableView.dequeueReusableCell(withIdentifier: "feedCell") as? FeedCell else {return UITableViewCell()}
         
         let message = messageArry[indexPath.row]
-        let image = UIImage(named: "defaultProfileImage")
-        
         DataService.instance.getUserName(withUID: message.senderId) { (returnedUserName) in
-            DataService.instance.getProfilePhoto(forUserId: message.senderId, handler: { (returnedImage) in
-                if returnedImage == nil {
-                    cell.configureCell(userImage: image!, email: returnedUserName, message: message.content)
-                }
-                else {
-                    cell.configureCell(userImage: returnedImage!, email: returnedUserName, message: message.content)
-                }
+            DataService.instance.getProfilePhoto(forUserId: message.senderId, handler: { (returnedUrl) in
+                cell.configureCell(image: returnedUrl, email: returnedUserName, message: message.content)
             })
         }
-        
         return cell
-        
-    }
-    
-    
-    
-    
-    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, nil) in
-        }
-        return UISwipeActionsConfiguration(actions: [delete])
     }
 }
-
-
-

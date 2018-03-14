@@ -30,7 +30,7 @@ class GroupFeedVC: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        //        sendBtnView.bindToKeyboard()
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,19 +40,21 @@ class GroupFeedVC: UIViewController {
         DataService.instance.getEmails(group: group!) { (returnEmails) in
             self.membersLbl.text = returnEmails.joined(separator: ", ")
         }
-        
+        fetchAllGroupMessages()
+
+    }
+    
+    func fetchAllGroupMessages() {
         DataService.instance.REF_GROUPS.observe(.value) { (snapshot) in
             DataService.instance.getAllGroupsMessages(desiredGroup: self.group!, handler: { (returnedGroupMessage) in
                 self.groupMessage = returnedGroupMessage
                 self.tableView.reloadData()
-                
                 if self.groupMessage.count > 0 {
                     self.tableView.scrollToRow(at: IndexPath(row: self.groupMessage.count - 1, section: 0), at: .none, animated: true)
                 }
             })
         }
     }
-    
     
     @IBAction func sendBtnWasPressed(_ sender: Any) {
         if textField.text != "" {
@@ -73,7 +75,6 @@ class GroupFeedVC: UIViewController {
     @IBAction func backBtnWasPressed(_ sender: Any) {
         dismiss(animated: true)
     }
-    
 }
 
 extension GroupFeedVC : UITableViewDelegate, UITableViewDataSource {
@@ -88,17 +89,11 @@ extension GroupFeedVC : UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupFeedCell", for: indexPath) as? GroupFeedCell else { return UITableViewCell() }
-        
-        let image = UIImage(named: "defaultProfileImage")
-        
+                
         let message = groupMessage[indexPath.row]
         DataService.instance.getUserName(withUID: message.senderId) { (email) in
-            DataService.instance.getProfilePhoto(forUserId: message.senderId, handler: { (returnedImage) in
-                if returnedImage == nil {
-                    cell.configureCell(profileImage: image!, email: email, content: message.content)
-                }else {
-                    cell.configureCell(profileImage:returnedImage!, email: email, content: message.content)
-                }
+            DataService.instance.getProfilePhoto(forUserId: message.senderId, handler: { (returnedURL) in
+                cell.configureCell(image: returnedURL, email: email, content: message.content)
             })
         }
         return cell

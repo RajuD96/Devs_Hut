@@ -18,8 +18,9 @@ class GroupsVC: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-    }
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
 
+    }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
@@ -48,8 +49,6 @@ extension GroupsVC:UITableViewDelegate,UITableViewDataSource {
         cell.configureCell(title: group.groupTitle, description: group.groupDesc, memberCount: group.memberCount)
         return cell
     }
-    
-    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard let groupFeedVC = storyboard?.instantiateViewController(withIdentifier: "GroupFeedVC") as? GroupFeedVC else { return }
         groupFeedVC.initData(forGroup: groupsArry[indexPath.row])

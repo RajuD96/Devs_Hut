@@ -18,8 +18,9 @@ class LoginVC: UIViewController {
         emailTxtFeild.delegate = self
         passwordTxtFeild.delegate = self
         spinner.isHidden = true
-        
     }
+    
+    //Sign-In with Email
     @IBAction func signUpBtnwasPressed(_ sender: Any) {
         spinner.isHidden = false
         spinner.startAnimating()
@@ -27,6 +28,8 @@ class LoginVC: UIViewController {
             AuthService.instance.loginUser(withEmail: emailTxtFeild.text!, andPassWord: passwordTxtFeild.text!, loginUserComplete: { (success, loginError) in
                 if success {
                     self.dismiss(animated: true, completion: nil)
+                    NotificationCenter.default.post(name: USER_IMAGE_LOADED, object: nil)
+                    
                 }else {
                     print(String(describing: loginError?.localizedDescription))
                 }
@@ -35,9 +38,6 @@ class LoginVC: UIViewController {
                         AuthService.instance.loginUser(withEmail: self.emailTxtFeild.text!, andPassWord: self.passwordTxtFeild.text!, loginUserComplete: { (success, nil) in
                             
                             self.dismiss(animated: true, completion: nil)
-//                            let FeedVC = self.storyboard?.instantiateViewController(withIdentifier: "feedVC")
-//                            self.presentDetails(FeedVC!)
-                            
                             self.spinner.isHidden = true
                             self.spinner.stopAnimating()
                             print("Successfully LoginUser")

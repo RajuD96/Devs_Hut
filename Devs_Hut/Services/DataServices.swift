@@ -13,6 +13,7 @@ import FirebaseStorage
 
 let DB_BASE = Database.database().reference()
 let STORAGE_BASE = Storage.storage().reference()
+let USER_IMAGE_LOADED = Notification.Name("userImageLoaded")
 
 class DataService {
     static let instance = DataService()
@@ -22,6 +23,8 @@ class DataService {
     private var _REF_GROUPS = DB_BASE.child("groups")
     private var _REF_FEEDS = DB_BASE.child("feeds")
     private var _REF_STORE_PROFILEIMG = STORAGE_BASE.child("profile_Image")
+    
+    
     var REF_BASE:DatabaseReference {
         return _REF_BASE
     }
@@ -74,7 +77,6 @@ class DataService {
         var messageArry = [Message]()
         REF_FEEDS.observeSingleEvent(of: .value) { (feedMessageSnapShot) in
             guard let feedMessageSnapShot = feedMessageSnapShot.children.allObjects as? [DataSnapshot] else { return }
-            
             for message in feedMessageSnapShot {
                 let content = message.childSnapshot(forPath: "content").value as! String
                 let senderId = message.childSnapshot(forPath: "senderId").value as! String
@@ -187,36 +189,18 @@ class DataService {
         handler(true)
     }
     
-    
-    func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: UIImage?) -> ()){
-        REF_USER.observe(.value) { (snapshot) in
-            guard let snapshot = snapshot.children.allObjects as? [DataSnapshot] else {return}
+    func getProfilePhoto(forUserId uid: String, handler: @escaping (_ profileImage: URL?) -> ()){
+        
+        let storageRef = Storage.storage().reference().child("profile_Image/\(uid)")
+        storageRef.downloadURL(completion: { (url, error) in
             
-            for image in snapshot {
-                if uid == image.key {
-                    let imageUrl = image.childSnapshot(forPath: "profileImageUrl").value as! String
-                    let storageRef = Storage.storage().reference(forURL: imageUrl)
-                    storageRef.downloadURL(completion: { (url, error) in
-                        if error == nil {
-                            let data = NSData(contentsOf: url!)
-                            let image = UIImage(data: data! as Data)
-                            print("############")
-                            handler(image)
-                        }else {
-                            print("@@@@@@@@@@@@@")
-                            handler(nil)
-                        }
-                    })
-                    
-                }
+            if error == nil {
+                handler(url)
+            }else {
+                handler(nil)
             }
-        }
+            
+        })
     }
-    
-    
-    
 }
-
-
-
 

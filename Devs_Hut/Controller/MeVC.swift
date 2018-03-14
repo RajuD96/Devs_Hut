@@ -11,6 +11,7 @@ import Firebase
 import FirebaseStorage
 import GoogleSignIn
 import FBSDKLoginKit
+import Kingfisher
 
 
 class MeVC: UIViewController {
@@ -26,27 +27,37 @@ class MeVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+       fetchGroups()
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.tableFooterView = UIView(frame: CGRect.zero)
+        profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (handleTapGesture)))
+        profileImage.isUserInteractionEnabled = true
+        NotificationCenter.default.addObserver(self, selector: #selector(fetchProfileImage), name: USER_IMAGE_LOADED, object: nil)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.emailLbl.text = Auth.auth().currentUser?.email
+    }
+    
+    @objc func fetchProfileImage() {
+        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedUrl) in
+            if returnedUrl != nil {
+                self.profileImage.kf.setImage(with: returnedUrl)
+            }else {
+                self.profileImage.image = UIImage(named: "defaultProfileImage")
+            }
+        }
+    }
+    
+    func fetchGroups(){
         DataService.instance.REF_GROUPS.observe(.value) { (snapshot) in
             DataService.instance.getAllGroups(handler: { (groupInfo) in
                 self.groups = groupInfo
                 self.tableView.reloadData()
             })
         }
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        
-    profileImage.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector (handleTapGesture)))
-        profileImage.isUserInteractionEnabled = true
-        
-        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
-            self.profileImage.image = returnedImage
-        }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.emailLbl.text = Auth.auth().currentUser?.email
     }
     
     @IBAction func signOutBtnWasPressed(_ sender: Any) {
@@ -57,7 +68,6 @@ class MeVC: UIViewController {
                 GIDSignIn.sharedInstance().signOut()
                 FBSDKLoginManager().logOut()
                 
-                print("logout")
                 let authVC = self.storyboard?.instantiateViewController(withIdentifier: "AuthVC") as? AuthVC
                 
                 self.present(authVC!, animated: true, completion: nil)
@@ -73,7 +83,6 @@ class MeVC: UIViewController {
         logOutPopUp.addAction(logoutCancel)
         present(logOutPopUp, animated: true, completion: nil)
     }
-    
 }
 
 extension MeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
@@ -116,8 +125,6 @@ extension MeVC:UIImagePickerControllerDelegate,UINavigationControllerDelegate {
                     }
                 }
             })
-            
-            
         }else {
             print("image was not selected")
         }
@@ -149,22 +156,3 @@ extension MeVC : UITableViewDataSource,UITableViewDelegate {
         
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

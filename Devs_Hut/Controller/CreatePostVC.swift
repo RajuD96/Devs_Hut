@@ -8,6 +8,7 @@
 
 import UIKit
 import Firebase
+import Kingfisher
 
 class CreatePostVC: UIViewController {
 
@@ -18,15 +19,19 @@ class CreatePostVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         textView.delegate = self
-        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedImage) in
-            if returnedImage == nil {
-                self.userImage.image = UIImage(named: "defaultProfileImage")
+        fetchProfile()
+    }
+    
+    func fetchProfile() {
+        DataService.instance.getProfilePhoto(forUserId: (Auth.auth().currentUser?.uid)!) { (returnedUrl) in
+            if returnedUrl != nil {
+                self.userImage.kf.setImage(with: returnedUrl)
+
             }else {
-                self.userImage.image = returnedImage
+                self.userImage.image = UIImage(named: "defaultProfileImage")
             }
             
         }
-        
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -40,7 +45,6 @@ class CreatePostVC: UIViewController {
 
     @IBAction func closeBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-        
     }
     
     @IBAction func sendBtnWasPressed(_ sender: Any) {

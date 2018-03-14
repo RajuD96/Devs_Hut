@@ -17,14 +17,9 @@ class GroupCell: UITableViewCell {
     
     
     func configureCell(title:String,description:String,memberCount:Int){
-        
-        
         self.groupTitle.text = title
         self.groupDesc.text = description
         self.memberCount.text = "\(memberCount) member"
-        
-        
-        
     }
     
     

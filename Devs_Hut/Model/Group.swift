@@ -33,10 +33,6 @@ class Group {
         return _members
     }
     
-    
-    
-    
-    
     init(title:String, description:String, key:String, members:[String], memberCount:Int) {
         self._groupTitle = title
         self._groupDesc = description
@@ -44,16 +40,4 @@ class Group {
         self._members = members
         self._memberCount = memberCount
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
 }

@@ -13,5 +13,6 @@ target 'Devs_Hut' do
   pod 'FBSDKLoginKit'
   pod 'GoogleSignIn'
   pod 'IQKeyboardManagerSwift'
+  pod 'Kingfisher', '~> 4.0'
 
 end

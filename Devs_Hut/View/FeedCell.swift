@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FeedCell: UITableViewCell {
 
@@ -15,8 +16,15 @@ class FeedCell: UITableViewCell {
     @IBOutlet weak var messageLbl: UILabel!
     
     
-    func configureCell(userImage:UIImage,email:String,message:String){
-        self.userImage.image = userImage
+    func configureCell(image: URL?,email: String,message: String){
+        
+        if image != nil {
+            self.userImage.kf.setImage(with: image)
+        }
+        else {
+            self.userImage.image = UIImage(named: "defaultProfileImage")
+        }
+        
         self.emailLbl.text = email
         self.messageLbl.text = message
         

@@ -16,5 +16,4 @@ class ShadowView: UIView {
         self.layer.shadowColor = #colorLiteral(red: 0, green: 0, blue: 0, alpha: 1)
         super.awakeFromNib()
     }
-
 }
