@@ -35,6 +35,9 @@ class GroupsVC: UIViewController {
 }
 
 extension GroupsVC:UITableViewDelegate,UITableViewDataSource {
+    
+    
+    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
@@ -45,7 +48,6 @@ extension GroupsVC:UITableViewDelegate,UITableViewDataSource {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "groupCell") as? GroupCell else { return UITableViewCell() }
         
         let group = groupsArry[indexPath.row]
-        
         cell.configureCell(title: group.groupTitle, description: group.groupDesc, memberCount: group.memberCount)
         return cell
     }

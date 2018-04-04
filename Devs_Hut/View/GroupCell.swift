@@ -15,7 +15,6 @@ class GroupCell: UITableViewCell {
     @IBOutlet weak var groupDesc: UILabel!
     @IBOutlet weak var memberCount: UILabel!
     
-    
     func configureCell(title:String,description:String,memberCount:Int){
         self.groupTitle.text = title
         self.groupDesc.text = description
