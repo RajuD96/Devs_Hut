@@ -23,6 +23,7 @@
 		E9B0D3982059334700F5369A /* RoundedButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B0D3972059334700F5369A /* RoundedButton.swift */; };
 		E9B56CBF20170E950005C86F /* FeedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B56CBE20170E950005C86F /* FeedCell.swift */; };
 		E9B56CC1201712CA0005C86F /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9B56CC0201712CA0005C86F /* Message.swift */; };
+		E9BF1DA0207B7BE30004BF2A /* CustomUIButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BF1D9F207B7BE30004BF2A /* CustomUIButton.swift */; };
 		E9C338EF20186AAE00000743 /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C338EE20186AAE00000743 /* UserCell.swift */; };
 		E9DF914B201315D000074939 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF914A201315D000074939 /* AppDelegate.swift */; };
 		E9DF914D201315D000074939 /* FeedVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9DF914C201315D000074939 /* FeedVC.swift */; };
@@ -58,6 +59,7 @@
 		E9B0D3972059334700F5369A /* RoundedButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedButton.swift; sourceTree = "<group>"; };
 		E9B56CBE20170E950005C86F /* FeedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCell.swift; sourceTree = "<group>"; };
 		E9B56CC0201712CA0005C86F /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		E9BF1D9F207B7BE30004BF2A /* CustomUIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUIButton.swift; sourceTree = "<group>"; };
 		E9C338EE20186AAE00000743 /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
 		E9DF9147201315D000074939 /* Devs_Hut.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Devs_Hut.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9DF914A201315D000074939 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				E92E1269202F541900F1465A /* CircleImage.swift */,
 				E9AAE96C2056796B0096087B /* MeCell.swift */,
 				E9B0D3972059334700F5369A /* RoundedButton.swift */,
+				E9BF1D9F207B7BE30004BF2A /* CustomUIButton.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -375,6 +378,7 @@
 				E92BE88A20163F3800D89C5E /* CreatePostVC.swift in Sources */,
 				E9AFECCD2015BAC600FA0D16 /* AuthServices.swift in Sources */,
 				E9B0D3982059334700F5369A /* RoundedButton.swift in Sources */,
+				E9BF1DA0207B7BE30004BF2A /* CustomUIButton.swift in Sources */,
 				E9DF914D201315D000074939 /* FeedVC.swift in Sources */,
 				E92E126A202F541900F1465A /* CircleImage.swift in Sources */,
 				E9DF9166201320F700074939 /* DataServices.swift in Sources */,
@@ -520,6 +524,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B7MXP2FS7S;
 				INFOPLIST_FILE = Devs_Hut/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RD.Devs-Hut";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -537,6 +542,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = B7MXP2FS7S;
 				INFOPLIST_FILE = Devs_Hut/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "RD.Devs-Hut";
 				PRODUCT_NAME = "$(TARGET_NAME)";

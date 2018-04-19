@@ -21,6 +21,4 @@ class MeCell: UITableViewCell {
         self.groupTitleLbl.text = groupTitle
         
     }
-    
-
 }

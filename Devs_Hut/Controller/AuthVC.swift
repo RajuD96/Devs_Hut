@@ -12,6 +12,8 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 import GoogleSignIn
 
+
+
 class AuthVC: UIViewController,GIDSignInUIDelegate, GIDSignInDelegate,FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
@@ -55,7 +57,6 @@ class AuthVC: UIViewController,GIDSignInUIDelegate, GIDSignInDelegate,FBSDKLogin
                 
                 let vc = self.storyboard?.instantiateViewController(withIdentifier: "feedVC")
                 self.presentDetails(vc!)
-                
             }
         })
     }

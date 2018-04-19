@@ -20,16 +20,11 @@ class GroupFeedCell: UITableViewCell {
     func configureCell(image:URL?,email:String,content:String){
         
         if image != nil {
-        self.profileImage.kf.setImage(with: image)
+            self.profileImage.kf.setImage(with: image)
         }else {
             self.profileImage.image = UIImage(named: "defaultProfileImage")
         }
-        
-        
-        
         self.emailLbl.text = email
         self.contentLbl.text = content
-        
     }
-    
 }

@@ -17,7 +17,7 @@ import Kingfisher
 class MeVC: UIViewController {
     
     @IBOutlet weak var profileImage: UIImageView! 
-    @IBOutlet weak var userImg: UIImageView!
+
     @IBOutlet weak var emailLbl: UILabel!
     @IBOutlet weak var tableView: UITableView!
     
@@ -38,6 +38,7 @@ class MeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         self.emailLbl.text = Auth.auth().currentUser?.email
     }
     

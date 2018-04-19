@@ -21,16 +21,17 @@ class LoginVC: UIViewController {
     }
     
     //Sign-In with Email
-    @IBAction func signUpBtnwasPressed(_ sender: Any) {
+    @IBAction func signUpBtnwasPressed(_ sender: UIButton) {
+        
         spinner.isHidden = false
         spinner.startAnimating()
         if emailTxtFeild.text != nil && passwordTxtFeild.text != nil {
             AuthService.instance.loginUser(withEmail: emailTxtFeild.text!, andPassWord: passwordTxtFeild.text!, loginUserComplete: { (success, loginError) in
                 if success {
-                    self.dismiss(animated: true, completion: nil)
                     NotificationCenter.default.post(name: USER_IMAGE_LOADED, object: nil)
-                    
+                    self.dismiss(animated: true, completion: nil)
                 }else {
+                    self.hapticFeedBack()
                     print(String(describing: loginError?.localizedDescription))
                 }
                 AuthService.instance.registerUser(withEmail: self.emailTxtFeild.text!, andPassword: self.passwordTxtFeild.text!, registerUserComplete: { (success, registerError) in
@@ -44,6 +45,7 @@ class LoginVC: UIViewController {
                         })
                     }
                     else {
+                        self.hapticFeedBack()
                         self.presentAlert(alert: (registerError?.localizedDescription)!)
                         self.spinner.isHidden = true
                         self.spinner.stopAnimating()
@@ -61,11 +63,13 @@ class LoginVC: UIViewController {
         alertVC.addAction(okAction)
         present(alertVC, animated: true, completion: nil)
     }
+    func hapticFeedBack() {
+        let generator = UINotificationFeedbackGenerator()
+        generator.notificationOccurred(.error)
+    }
     
     @IBAction func closeBtnWasPressed(_ sender: Any) {
         dismiss(animated: true, completion: nil)
-        
     }
-    
 }
 extension LoginVC:UITextFieldDelegate {}

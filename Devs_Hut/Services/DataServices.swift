@@ -94,7 +94,6 @@ class DataService {
             
             guard let groupMessageSnapshot = groupMessageSnapshot.children.allObjects as? [DataSnapshot] else { return }
             
-            
             for groupMessage in groupMessageSnapshot {
                 
                 let content = groupMessage.childSnapshot(forPath: "content").value as! String
@@ -203,4 +202,3 @@ class DataService {
         })
     }
 }
-
